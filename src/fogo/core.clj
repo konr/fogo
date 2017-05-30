@@ -1,6 +1,11 @@
 (ns fogo.core)
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+
+(defn simulate
+  [{:keys [cash income interest] :as simulation-data}]
+  (iterate (fn [{:keys [cash income interest iteration]}]
+             {:iteration (inc iteration)
+              :cash (+ cash income (* interest cash))
+              :income income
+              :interest interest})
+           (assoc simulation-data :iteration 0)))
